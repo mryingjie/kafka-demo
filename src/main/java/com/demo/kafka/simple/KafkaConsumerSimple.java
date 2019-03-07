@@ -47,7 +47,7 @@ public class KafkaConsumerSimple {
 
 
     public static void main(String[] args) {
-        while (true) {
+        while (true)  {
             ConsumerRecords<String, String> records = consumer.poll(10);
 
             for (ConsumerRecord<String, String> record : records) {
