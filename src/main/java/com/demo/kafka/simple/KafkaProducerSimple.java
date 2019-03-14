@@ -25,10 +25,10 @@ public class KafkaProducerSimple {
          * 创建topic的命令：
          * ./kafka-topics.sh --create --topic order --replication-factor 2 --partitions 4 --zookeeper hadoop1002:2181
          */
-        String topic = "order";
+        String topic = "payment";
 
-//        String BROKER_LIST = "192.168.42.132:9092";
-        String BROKER_LIST = "hadoop.abc6.net:9092";
+        String BROKER_LIST = "192.168.42.132:9092";
+//        String BROKER_LIST = "hadoop.abc6.net:9092";
 //        String BROKER_LIST = "hadoop.abc6.net:9092,zhengyingjie2.abc6.net:9092,zhengyingjie3.abc6.net:9092";
 
         /**

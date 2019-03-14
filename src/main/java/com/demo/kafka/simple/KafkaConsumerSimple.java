@@ -18,10 +18,10 @@ import java.util.Properties;
 public class KafkaConsumerSimple {
 
 
-    private static final String TOPIC1 = "payment";
-    private static final String TOPIC2 = "order";
+    private static final String TOPIC1 = "payment--new";
+//    private static final String TOPIC2 = "order";
 
-    private static final String BROKER_LIST = "zhengyingjie3.abc6.net:9092";
+    private static final String BROKER_LIST = "192.168.42.132:9092";
     private static KafkaConsumer<String,String> consumer = null;
 
     static {
@@ -29,7 +29,7 @@ public class KafkaConsumerSimple {
         consumer = new KafkaConsumer<String, String>(configs);
         List topics = new ArrayList<>();
         topics.add(TOPIC1);
-        topics.add(TOPIC2);
+//        topics.add(TOPIC2);
         consumer.subscribe(topics);
     }
 
