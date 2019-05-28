@@ -38,7 +38,7 @@
         消费者如果是根据javaapi来消费，也就是【kafka.javaapi.consumer.ConsumerConnector】，通过配置参数【zookeeper.connect】来消费。这种情况下，消费者的offset会更新到zookeeper的
         如果是根据kafka默认的api来消费，即【org.apache.kafka.clients.consumer.KafkaConsumer】，我们会配置参数【bootstrap.servers】来消费。而其消费者的offset会更新到一个kafka自带的topic【__consumer_offsets】下面，查看当前group的消费进度，则要依靠kafka自带的工具【kafka-consumer-offset-checker】
     （6）kafka和其它分布式消息组件相比有什么特点比如RabbitMQ RocketMQ
-        RabbitMQ
+        RabbitMQ:
         　　单机吞吐量：万级
         　　topic数量都吞吐量的影响：
         　　时效性：微秒级，延时低是一大特点。
@@ -53,7 +53,7 @@
         　　　　在国内一些互联网公司近几年用rabbitmq也比较多一些   但是问题也是显而易见的，RabbitMQ确实吞吐量会低一些，这是因为他做的实现机制比较重。
         　　　　erlang开发，很难去看懂源码，基本职能依赖于开源社区的快速维护和修复bug。
         　　　　rabbitmq集群动态扩展会很麻烦，不过这个我觉得还好。其实主要是erlang语言本身带来的问题。很难读源码，很难定制和掌控。
-        RocketMQ
+        RocketMQ:
         　　单机吞吐量：十万级
         　　topic数量都吞吐量的影响：topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降。可支持大量topic是一大优势。
         　　时效性：ms级
@@ -64,7 +64,7 @@
         　　　　接口简单易用，可以做到大规模吞吐，性能也非常好，分布式扩展也很方便，社区维护还可以，可靠性和可用性都是ok的，还可以支撑大规模的topic数量，支持复杂MQ业务场景
         　　　　而且一个很大的优势在于，源码是java，我们可以自己阅读源码，定制自己公司的MQ，可以掌控
         　　　　社区活跃度相对较为一般，不过也还可以，文档相对来说简单一些，然后接口这块不是按照标准JMS规范走的有些系统要迁移需要修改大量代码
-        Kafka
+        Kafka:
         　　单机吞吐量：十万级，最大的优点，就是吞吐量高。
         　　topic数量都吞吐量的影响：topic从几十个到几百个的时候，吞吐量会大幅度下降。所以在同等机器下，kafka尽量保证topic数量不要过多。如果要支撑大规模topic，需要增加更多的机器资源
         　　时效性：ms级
@@ -76,3 +76,21 @@
         　　　　同时kafka最好是支撑较少的topic数量即可，保证其超高吞吐量
         　　　　kafka唯一的一点劣势是有可能消息重复消费，那么对数据准确性会造成极其轻微的影响，在大数据领域中以及日志采集中，这点轻微影响可以忽略
 
+常用命令：
+    1>查看topic
+    ./kafka-topics.sh --list --zookeeper hadoop1001:2181
+    2>创建topic
+    ./kafka-topics.sh --create --topic order --replication-factor 2 --partitions 4 --zookeeper hadoop1002:2181
+
+    3>生产者
+    bin/kafka-console-producer.sh --broker-list 192.168.42.121:9092 --topic payment --producer.config config/producer.properties
+
+    4>消费者
+    bin/kafka-console-consumer.sh --bootstrap-server hadoop1002:9092 --from-beginning --topic payment
+
+
+    5>查看topic分区情况
+    bin/kafka-topics.sh --describe --zookeeper hadoop1001:2181,hadoop1002:2181,hadoop1003:2181 --topic test
+
+    6>删除topic
+    bin/kafka-topics.sh --delete --zookeeper hadoop1001:2181,hadoop1002:2181,hadoop1003:2181  --topic reconcile
