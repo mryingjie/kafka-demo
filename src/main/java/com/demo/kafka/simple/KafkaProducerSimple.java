@@ -53,8 +53,7 @@ public class KafkaProducerSimple {
         /**
          * request.required.acks 设置发送数据是否需要服务器的反馈 三个值0 1 -1
          * 0 表示producer永远不会等待一个来自broker的ack
-         * 1 表示在leader replica收到数据后 就会返回ack
-         * 但是如果刚写到leader 还没写到replica上就挂掉了 数据可能丢失
+         * 1 表示在leader replica收到数据后 就会返回ack 但是如果刚写到leader 还没写到replica上就挂掉了 数据可能丢失
          * -1 表示所有的副本都收到数据了才会返回ack
          *
          * 默认
@@ -91,13 +90,12 @@ public class KafkaProducerSimple {
             value = "value:" + UUID.randomUUID().toString();
             producerRecord = new ProducerRecord(topic, null, null, key, value, null);
 
-            producer.send(producerRecord, (metadata, exception) -> {
-
-                System.out.println("执行Callback!!!! " +"\n"+
-                        "metadate:"+ JSON.toJSONString(metadata)+"\n"
-                        + "exception:"+JSON.toJSONString(exception));
-
-            });
+            producer.send(
+                    producerRecord,
+                    (metadata, exception) ->
+                    System.out.println("执行Callback!!!! " +"\n"+
+                    "metadate:"+ JSON.toJSONString(metadata)+"\n"+
+                    "exception:"+JSON.toJSONString(exception)));
         }
 
 

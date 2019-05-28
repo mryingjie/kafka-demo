@@ -18,7 +18,7 @@ import java.util.Properties;
 public class KafkaConsumerSimple {
 
 
-    private static final String TOPIC1 = "payment--new";
+    private static final String TOPIC1 = "target";
 //    private static final String TOPIC2 = "order";
 
     private static final String BROKER_LIST = "192.168.42.132:9092";
@@ -35,7 +35,6 @@ public class KafkaConsumerSimple {
 
     private static Properties initConfig(){
         Properties properties = new Properties();
-
         properties.put(ConsumerConfig.BOOTSTRAP_SERVERS_CONFIG,BROKER_LIST);
         properties.put(ConsumerConfig.GROUP_ID_CONFIG,"0");
         properties.put(ConsumerConfig.KEY_DESERIALIZER_CLASS_CONFIG, StringDeserializer.class.getName());
