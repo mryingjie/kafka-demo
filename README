@@ -35,12 +35,12 @@
          默认是 1
     （5）消费者如何保存消费状态即offset
         kafka消费者在会保存其消费的进度，也就是offset，存储的位置根据选用的kafka api不同而不同
-        消费者如果是根据javaapi来消费，也就是【kafka.javaapi.consumer.ConsumerConnector】，通过配置参数【zookeeper.connect】来消费。这种情况下，消费者的offset会更新到zookeeper的
+        消费者如果是根据javaapi来消费，也就是【kafka.javaapi.consumer.ConsumerConnector】，通过配置参数【zookeeper.connect】来消费。这种情况下，消费者的offset会更新到zookeeper上
         如果是根据kafka默认的api来消费，即【org.apache.kafka.clients.consumer.KafkaConsumer】，我们会配置参数【bootstrap.servers】来消费。而其消费者的offset会更新到一个kafka自带的topic【__consumer_offsets】下面，查看当前group的消费进度，则要依靠kafka自带的工具【kafka-consumer-offset-checker】
     （6）kafka和其它分布式消息组件相比有什么特点比如RabbitMQ RocketMQ
         RabbitMQ:
         　　单机吞吐量：万级
-        　　topic数量都吞吐量的影响：
+        　　topic数量对吞吐量的影响：
         　　时效性：微秒级，延时低是一大特点。
         　　可用性：高，基于主从架构实现高可用性
         　　消息可靠性：
@@ -55,7 +55,7 @@
         　　　　rabbitmq集群动态扩展会很麻烦，不过这个我觉得还好。其实主要是erlang语言本身带来的问题。很难读源码，很难定制和掌控。
         RocketMQ:
         　　单机吞吐量：十万级
-        　　topic数量都吞吐量的影响：topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降。可支持大量topic是一大优势。
+        　　topic数量对吞吐量的影响：topic可以达到几百，几千个的级别，吞吐量会有较小幅度的下降。可支持大量topic是一大优势。
         　　时效性：ms级
         　　可用性：非常高，分布式架构
         　　消息可靠性：经过参数优化配置，消息可以做到0丢失
@@ -66,7 +66,7 @@
         　　　　社区活跃度相对较为一般，不过也还可以，文档相对来说简单一些，然后接口这块不是按照标准JMS规范走的有些系统要迁移需要修改大量代码
         Kafka:
         　　单机吞吐量：十万级，最大的优点，就是吞吐量高。
-        　　topic数量都吞吐量的影响：topic从几十个到几百个的时候，吞吐量会大幅度下降。所以在同等机器下，kafka尽量保证topic数量不要过多。如果要支撑大规模topic，需要增加更多的机器资源
+        　　topic数量对吞吐量的影响：topic从几十个到几百个的时候，吞吐量会大幅度下降。所以在同等机器下，kafka尽量保证topic数量不要过多。如果要支撑大规模topic，需要增加更多的机器资源
         　　时效性：ms级
         　　可用性：非常高，kafka是分布式的，一个数据多个副本，少数机器宕机，不会丢失数据，不会导致不可用
         　　消息可靠性：经过参数优化配置，消息可以做到0丢失
